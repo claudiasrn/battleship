@@ -1,0 +1,394 @@
+/* Reset */
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+*:not(dialog) {
+	margin: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	html {
+		interpolate-size: allow-keywords;
+	}
+}
+
+body {
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+}
+
+p {
+	text-wrap: pretty;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	text-wrap: balance;
+}
+
+/* press-start-2p-regular - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: "Press Start 2P";
+	font-style: normal;
+	font-weight: 400;
+	src: url("./fonts/press-start-2p-v16-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* space-mono-regular - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: "Space Mono";
+	font-style: normal;
+	font-weight: 400;
+	src: url("./fonts/space-mono-v17-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* space-mono-700 - latin */
+@font-face {
+	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-family: "Space Mono";
+	font-style: normal;
+	font-weight: 700;
+	src: url("./fonts/space-mono-v17-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+body {
+	background-color: #050810;
+	background-size: auto;
+	background-repeat: repeat;
+	width: 100vw;
+	height: 100vh;
+    cursor: url('../assets/images/markers/cursor.png') 0 0, auto;
+}
+
+.mode-select {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.wordmark {
+	display: flex;
+	align-items: center;
+	gap: 20px;
+	padding: 10px 15px;
+}
+
+h1 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	letter-spacing: 2px;
+	font-size: 2.5rem;
+}
+
+h1 + img {
+	width: 48px;
+	height: 48px;
+	object-fit: none;
+	object-position: 0 0;
+	overflow: hidden;
+	transform: scale(1.5);
+	image-rendering: pixelated;
+}
+
+.wordmark + p {
+	font-family: "Space Mono";
+	color: #7c93b3;
+	letter-spacing: 4px;
+	font-size: 1.25rem;
+	margin-bottom: 100px;
+}
+
+.prompt-selection-text {
+	display: flex;
+	color: #d85a30;
+	letter-spacing: 4px;
+	font-size: 1.25rem;
+	font-family: "Space Mono";
+	align-items: center;
+	gap: 15px;
+	margin-bottom: 50px;
+}
+
+.prompt-selection-text > div {
+	width: 15px;
+	height: 80%;
+	background-color: #d85a30;
+}
+
+.mode-buttons {
+	display: flex;
+	align-items: center;
+	gap: 30px;
+}
+
+.mode-buttons > button {
+	width: 350px;
+	display: flex;
+	padding: 30px;
+	flex-direction: column;
+	align-items: flex-start;
+	background-color: #0b1220;
+	border: solid 1px #223047;
+    cursor: url('../assets/images/markers/cursor.png') 0 0, pointer;
+}
+
+.mode-buttons > button:focus-visible {
+	outline: 2px solid #E8543E;
+    outline-offset: 2px;
+}
+
+.mode-buttons > button > h2 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	font-size: 1.25rem;
+	letter-spacing: 1px;
+	margin-bottom: 20px;
+}
+
+.mode-buttons > button p {
+	font-family: "Space Mono";
+	color: #7c93b3;
+	font-size: 1rem;
+	text-align: start;
+}
+
+.mode-buttons > button img {
+	width: 48px;
+	height: 48px;
+	object-fit: none;
+	object-position: 0 0;
+	padding-left: 20px;
+	transform: scale(1.5);
+	image-rendering: pixelated;
+}
+
+.description {
+	display: flex;
+}
+
+.mode-buttons > button:hover {
+	background-color: #101b2e;
+	border: solid 1px #3a5578;
+}
+
+.decoration {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: -1;
+}
+
+.decoration-ship {
+	position: absolute;
+	image-rendering: pixelated;
+}
+
+.decoration-ship--saturn-v {
+	top: 8%;
+	left: 4%;
+	width: 60px;
+	transform: rotate(-15deg);
+}
+
+.decoration-ship--falcon-heavy {
+	top: 65%;
+	right: 6%;
+	width: 70px;
+	transform: rotate(20deg);
+}
+
+.decoration-ship--sputnik {
+	bottom: 5%;
+	left: 10%;
+	width: 40px;
+	transform: rotate(35deg);
+}
+
+.decoration-star {
+	position: absolute;
+	image-rendering: pixelated;
+	opacity: 0.7;
+}
+
+.decoration-star--dot {
+	width: 4px;
+}
+
+.decoration-star--large {
+	width: 14px;
+}
+
+.decoration-star--sparkle {
+	width: 10px;
+}
+
+.decoration-star--dot-0 {
+	top: 10%;
+	left: 6%;
+}
+.decoration-star--dot-1 {
+	top: 45%;
+	left: 2%;
+}
+.decoration-star--dot-2 {
+	top: 80%;
+	right: 4%;
+}
+.decoration-star--dot-3 {
+	top: 25%;
+	right: 3%;
+}
+.decoration-star--dot-4 {
+	top: 65%;
+	left: 15%;
+}
+.decoration-star--dot-5 {
+	top: 90%;
+	left: 40%;
+}
+.decoration-star--dot-6 {
+	top: 5%;
+	left: 70%;
+}
+.decoration-star--dot-7 {
+	top: 38%;
+	left: 35%;
+}
+.decoration-star--dot-8 {
+	top: 55%;
+	left: 62%;
+}
+.decoration-star--dot-9 {
+	top: 18%;
+	left: 48%;
+}
+
+.decoration-star--large-0 {
+	top: 3%;
+	right: 8%;
+}
+.decoration-star--large-1 {
+	top: 60%;
+	left: 4%;
+}
+.decoration-star--large-2 {
+	bottom: 6%;
+	right: 6%;
+}
+.decoration-star--large-3 {
+	top: 2%;
+	left: 8%;
+}
+.decoration-star--large-4 {
+	top: 30%;
+	right: 12%;
+}
+.decoration-star--large-5 {
+	bottom: 15%;
+	left: 25%;
+}
+.decoration-star--large-6 {
+	top: 70%;
+	right: 15%;
+}
+.decoration-star--large-7 {
+	top: 42%;
+	left: 45%;
+}
+.decoration-star--large-8 {
+	top: 12%;
+	left: 55%;
+}
+.decoration-star--large-9 {
+	bottom: 30%;
+	left: 55%;
+}
+
+.decoration-star--sparkle-0 {
+	top: 35%;
+	left: 1%;
+}
+.decoration-star--sparkle-1 {
+	top: 55%;
+	right: 1%;
+}
+.decoration-star--sparkle-2 {
+	bottom: 10%;
+	left: 6%;
+}
+.decoration-star--sparkle-3 {
+	top: 15%;
+	right: 5%;
+}
+.decoration-star--sparkle-4 {
+	top: 8%;
+	left: 40%;
+}
+.decoration-star--sparkle-5 {
+	bottom: 8%;
+	right: 20%;
+}
+.decoration-star--sparkle-6 {
+	top: 50%;
+	left: 50%;
+}
+.decoration-star--sparkle-7 {
+	top: 28%;
+	left: 20%;
+}
+.decoration-star--sparkle-8 {
+	top: 72%;
+	left: 38%;
+}
+.decoration-star--sparkle-9 {
+	top: 20%;
+	right: 30%;
+}
+
+.decoration-star--dot-10 {
+	bottom: 6%;
+	left: 48%;
+}
+.decoration-star--sparkle-10 {
+	bottom: 12%;
+	left: 55%;
+}
