@@ -611,6 +611,70 @@ h1 {
 }
 
 /* ============================
+   Final screen
+   ============================ */
+
+.results-mode {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.results-mode > h2 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	font-size: 2rem;
+	letter-spacing: 1px;
+	text-align: center;
+	width: 100%;
+}
+
+.results-mode > p {
+	font-family: "Space Mono";
+	color: #7c93b3;
+	letter-spacing: 4px;
+	font-size: 1.25rem;
+	margin-bottom: 30px;
+}
+
+.results-mode > img {
+	min-width: 48px;
+	max-width: 48px;
+	height: 48px;
+	object-fit: none;
+	object-position: 0 0;
+	overflow: hidden;
+	transform: scale(1.5);
+	image-rendering: pixelated;
+	margin-bottom: 20px;
+}
+
+.results-mode > button {
+	padding: 20px 40px;
+	background-color: #0b1220;
+	border: solid 1px #223047;
+	font-family: "Space Mono";
+	color: #7c93b3;
+	font-size: 1rem;
+	text-align: start;
+	cursor:
+		url("../assets/images/markers/cursor.png") 0 0,
+		auto;
+}
+
+.results-mode > button:hover {
+	background-color: #101b2e;
+	border: solid 1px #3a5578;
+}
+
+.results-mode > button:focus-visible {
+	outline: 2px solid #e8543e;
+	outline-offset: 2px;
+}
+
+/* ============================
    Decoration (shared across screens)
    ============================ */
 

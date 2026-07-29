@@ -15,6 +15,9 @@ import sputnikSrc from "./assets/images/ships/Sputnik.png";
 import starDotSrc from "./assets/images/decoration/star-dot.png";
 import starLargeSrc from "./assets/images/decoration/star-large.png";
 import starSparkleSrc from "./assets/images/decoration/star-sparkle.png";
+import attackPlayer1Src from "./assets/images/characters/player1/AttackPlayer1.png";
+import attackPlayer2Src from "./assets/images/characters/player2/AttackPlayer2.png";
+import deathPlayer1Src from "./assets/images/characters/player1/DeathPlayer1.png";
 
 const shipSprites = {
 	"saturn-v": saturnVSrc,
@@ -433,6 +436,85 @@ export function renderSwitch(playerName, playerNumber) {
 }
 
 function createSwitchDecoration() {
+	const decoration = document.createElement("div");
+	decoration.classList.add("decoration");
+
+	decoration.append(...createStarField());
+
+	return decoration;
+}
+
+export function renderResults(
+	gameMode,
+	didPlayerWin,
+	winnerName,
+	winnerNumber,
+) {
+	const container = document.createElement("div");
+	container.classList.add("results-mode");
+
+	const subtitle = document.createElement("p");
+	subtitle.textContent = "GALACTIC BATTLE COMPLETE";
+
+	const heading = document.createElement("h2");
+	heading.textContent =
+		gameMode === "bot"
+			? didPlayerWin
+				? "YOU WIN"
+				: "YOU LOSE"
+			: `${winnerName} WINS`;
+
+	const { src, frameCount } = getResultCharacter(
+		gameMode,
+		didPlayerWin,
+		winnerNumber,
+	);
+
+	const characterImg = document.createElement("img");
+	characterImg.src = src;
+	characterImg.alt = "";
+	characterImg.classList.add("results-character");
+	characterImg.dataset.spriteFrames = frameCount;
+	characterImg.dataset.frameWidth = 48;
+	characterImg.dataset.frameHeight = 48;
+	if (gameMode === "bot" && !didPlayerWin) {
+		characterImg.dataset.loop = "false";
+	}
+
+	const playAgainButton = document.createElement("button");
+	playAgainButton.textContent = "PLAY AGAIN";
+
+	const decoration = createResultsDecoration();
+
+	container.append(
+		subtitle,
+		heading,
+		characterImg,
+		playAgainButton,
+		decoration,
+	);
+
+	return container;
+}
+
+function getResultCharacter(gameMode, didPlayerWin, winnerNumber) {
+	if (gameMode === "bot") {
+		if (didPlayerWin) {
+			return winnerNumber === 2
+				? { src: attackPlayer2Src, frameCount: 6 }
+				: { src: attackPlayer1Src, frameCount: 9 };
+		}
+		return winnerNumber === 2
+			? { src: deathPlayer2Src, frameCount: 6 }
+			: { src: deathPlayer1Src, frameCount: 6 };
+	}
+
+	return winnerNumber === 2
+		? { src: attackPlayer2Src, frameCount: 6 }
+		: { src: attackPlayer1Src, frameCount: 9 };
+}
+
+function createResultsDecoration() {
 	const decoration = document.createElement("div");
 	decoration.classList.add("decoration");
 
