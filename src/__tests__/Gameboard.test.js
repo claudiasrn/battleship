@@ -1,4 +1,5 @@
 import { Gameboard } from "../Gameboard.js";
+import { Ship } from "../Ship.js";
 
 test("ship place occupies right coordinates", () => {
 	const gameboard = new Gameboard();
@@ -139,4 +140,53 @@ test("a sequence of mixed hits and misses each register correctly", () => {
 	expect(gameboard.receiveAttack([4, 3])).toBe("x");
 	expect(gameboard.receiveAttack([1, 1])).toBe("w");
 	expect(gameboard.receiveAttack([4, 4])).toBe("x");
+});
+
+test("getShipBoard exposes ship placement without being affected by attacks", () => {
+	const gameboard = new Gameboard();
+	const coordinates = [
+		[4, 3],
+		[4, 4],
+		[4, 5],
+	];
+	gameboard.placeShip(coordinates, "falcon9");
+	gameboard.receiveAttack([4, 3]);
+
+	const shipBoard = gameboard.getShipBoard();
+	expect(shipBoard[4][3]).toBeInstanceOf(Ship);
+	expect(shipBoard[4][3].name).toBe("falcon9");
+});
+
+test("getAttackBoard tracks hits and misses separately from ship placement", () => {
+	const gameboard = new Gameboard();
+	const coordinates = [
+		[4, 3],
+		[4, 4],
+		[4, 5],
+	];
+	gameboard.placeShip(coordinates, "falcon9");
+	gameboard.receiveAttack([4, 3]);
+	gameboard.receiveAttack([0, 0]);
+
+	const attackBoard = gameboard.getAttackBoard();
+	expect(attackBoard[4][3]).toBe("x");
+	expect(attackBoard[0][0]).toBe("w");
+	expect(attackBoard[5][5]).toBe("o");
+});
+
+test("a hit ship's cell still holds the Ship instance, not overwritten by the attack", () => {
+	const gameboard = new Gameboard();
+	const coordinates = [
+		[4, 3],
+		[4, 4],
+	];
+	gameboard.placeShip(coordinates, "sputnik");
+	gameboard.receiveAttack([4, 3]);
+
+	const shipBoard = gameboard.getShipBoard();
+	expect(shipBoard[4][3]).toBeInstanceOf(Ship);
+	expect(shipBoard[4][3].isSunk()).toBe(false);
+
+	gameboard.receiveAttack([4, 4]);
+	expect(shipBoard[4][3].isSunk()).toBe(true);
 });
