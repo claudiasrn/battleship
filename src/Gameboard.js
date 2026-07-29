@@ -1,31 +1,29 @@
 import { Ship } from "./Ship.js";
 
 export class Gameboard {
-	#board = [
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-		["o", "o", "o", "o", "o", "o", "o", "o", "o", "o"],
-	];
-
+	#shipBoard = createEmptyBoard();
+	#attackBoard = createEmptyBoard();
 	#ships = [];
+
+	getShipBoard() {
+		return this.#shipBoard;
+	}
+
+	getAttackBoard() {
+		return this.#attackBoard;
+	}
 
 	placeShip(coordinates, name) {
 		const ship = new Ship(coordinates.length, name, coordinates);
 
 		for (let coordinate of coordinates) {
-			const state = this.#board[coordinate[0]][coordinate[1]];
-			if (state instanceof Ship) return false;
+			if (this.#shipBoard[coordinate[0]][coordinate[1]] instanceof Ship) {
+				return false;
+			}
 		}
 
 		for (let coordinate of coordinates) {
-			this.#board[coordinate[0]][coordinate[1]] = ship;
+			this.#shipBoard[coordinate[0]][coordinate[1]] = ship;
 		}
 
 		this.#ships.push(ship);
@@ -33,26 +31,30 @@ export class Gameboard {
 	}
 
 	receiveAttack(coordinate) {
-		if (
-			this.#board[coordinate[0]][coordinate[1]] === "x" ||
-			this.#board[coordinate[0]][coordinate[1]] === "w"
-		) {
+		const [row, col] = coordinate;
+
+		if (this.#attackBoard[row][col] !== "o") {
 			return undefined;
 		}
 
-		if (this.#board[coordinate[0]][coordinate[1]] === "o") {
-			this.#board[coordinate[0]][coordinate[1]] = "w";
+		const shipCell = this.#shipBoard[row][col];
+
+		if (shipCell === "o") {
+			this.#attackBoard[row][col] = "w";
 			return "w";
 		} else {
-			this.#board[coordinate[0]][coordinate[1]].hit();
-			this.#board[coordinate[0]][coordinate[1]] = "x";
+			shipCell.hit();
+			this.#attackBoard[row][col] = "x";
 			return "x";
 		}
 	}
 
 	isOver() {
 		if (this.#ships.length === 0) return undefined;
-
 		return this.#ships.every((ship) => ship.isSunk());
 	}
+}
+
+function createEmptyBoard() {
+	return Array.from({ length: 10 }, () => Array(10).fill("o"));
 }
