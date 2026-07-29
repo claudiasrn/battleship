@@ -16,8 +16,8 @@ export class Gameboard {
 
 	#ships = [];
 
-	placeShip(coordinates) {
-		const ship = new Ship(coordinates.length);
+	placeShip(coordinates, name) {
+		const ship = new Ship(coordinates.length, name, coordinates);
 
 		for (let coordinate of coordinates) {
 			const state = this.#board[coordinate[0]][coordinate[1]];
