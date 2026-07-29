@@ -7,7 +7,7 @@ test("ship place occupies right coordinates", () => {
 		[4, 4],
 		[4, 5],
 	];
-	gameboard.placeShip(coordinates);
+	gameboard.placeShip(coordinates, "falcon9");
 
 	expect(gameboard.isOver()).toBe(false);
 
@@ -31,8 +31,8 @@ test("placing an overlapping ship doesn't corrupt the first ship's cells", () =>
 		[4, 6],
 	];
 
-	gameboard.placeShip(coordinates1);
-	gameboard.placeShip(coordinates2);
+	gameboard.placeShip(coordinates1, "falcon9");
+	gameboard.placeShip(coordinates2, "voyager");
 
 	expect(gameboard.receiveAttack([4, 3])).toBe("x");
 	expect(gameboard.receiveAttack([4, 4])).toBe("x");
@@ -51,7 +51,7 @@ test("attacking a cell with a ship, will mark it as a hit", () => {
 		[4, 4],
 		[4, 5],
 	];
-	gameboard.placeShip(coordinates);
+	gameboard.placeShip(coordinates, "falcon9");
 
 	expect(gameboard.receiveAttack([4, 3])).toBe("x");
 });
@@ -63,7 +63,7 @@ test("attacking a cell that has been attacked already wont work", () => {
 		[4, 4],
 		[4, 5],
 	];
-	gameboard.placeShip(coordinates);
+	gameboard.placeShip(coordinates, "falcon9");
 	gameboard.receiveAttack([4, 3]);
 	gameboard.receiveAttack([0, 0]);
 
@@ -84,7 +84,7 @@ test("if ships are placed and not sunk the game shouldn't be over", () => {
 		[4, 4],
 		[4, 5],
 	];
-	gameboard.placeShip(coordinates);
+	gameboard.placeShip(coordinates, "falcon9");
 	gameboard.receiveAttack([4, 3]);
 
 	expect(gameboard.isOver()).toBe(false);
@@ -97,7 +97,7 @@ test("if ships are placed and all sunk the game should be over", () => {
 		[4, 4],
 		[4, 5],
 	];
-	gameboard.placeShip(coordinates);
+	gameboard.placeShip(coordinates, "falcon9");
 	gameboard.receiveAttack([4, 3]);
 	gameboard.receiveAttack([4, 4]);
 	gameboard.receiveAttack([4, 5]);
@@ -117,8 +117,8 @@ test("if ships are placed and some sunk and others didn't the game shouldn't be 
 		[4, 7],
 		[4, 8],
 	];
-	gameboard.placeShip(coordinates1);
-	gameboard.placeShip(coordinates2);
+	gameboard.placeShip(coordinates1, "falcon9");
+	gameboard.placeShip(coordinates2, "voyager");
 	gameboard.receiveAttack([4, 3]);
 	gameboard.receiveAttack([4, 4]);
 	gameboard.receiveAttack([4, 5]);
@@ -133,7 +133,7 @@ test("a sequence of mixed hits and misses each register correctly", () => {
 		[4, 4],
 		[4, 5],
 	];
-	gameboard.placeShip(coordinates);
+	gameboard.placeShip(coordinates, "falcon9");
 
 	expect(gameboard.receiveAttack([0, 0])).toBe("w");
 	expect(gameboard.receiveAttack([4, 3])).toBe("x");
