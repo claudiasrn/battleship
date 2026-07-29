@@ -404,3 +404,39 @@ function createStarField() {
 
 	return starElements;
 }
+
+export function renderSwitch(playerName, playerNumber) {
+	const container = document.createElement("div");
+	container.classList.add("switch-mode");
+
+	const subtitle = document.createElement("p");
+	subtitle.textContent = "PASS THE DEVICE";
+
+	const heading = document.createElement("h2");
+	heading.textContent = `${playerName}'S TURN`;
+
+	const characterImg = document.createElement("img");
+	characterImg.src = playerNumber === 2 ? player2IdleSrc : player1IdleSrc;
+	characterImg.alt = "";
+	characterImg.dataset.spriteFrames = 4;
+	characterImg.dataset.frameWidth = 48;
+	characterImg.dataset.frameHeight = 48;
+
+	const confirmButton = document.createElement("button");
+	confirmButton.textContent = "I'M READY";
+
+	const decoration = createSwitchDecoration();
+
+	container.append(subtitle, heading, characterImg, confirmButton, decoration);
+
+	return container;
+}
+
+function createSwitchDecoration() {
+	const decoration = document.createElement("div");
+	decoration.classList.add("decoration");
+
+	decoration.append(...createStarField());
+
+	return decoration;
+}
