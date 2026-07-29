@@ -70,12 +70,14 @@ export function renderModeSelect() {
 		"VS BOT",
 		"Play against an automated opponent. Fast games, no waiting",
 		botIdleSrc,
+		"bot",
 	);
 
 	const humanButton = createModeButton(
 		"VS HUMAN",
 		"Play locally against another person, taking turns on this device",
 		player2IdleSrc,
+		"human",
 	);
 
 	buttonsContainer.append(botButton, humanButton);
@@ -93,8 +95,9 @@ export function renderModeSelect() {
 	return container;
 }
 
-function createModeButton(title, description, imgSrc) {
+function createModeButton(title, description, imgSrc, mode) {
 	const button = document.createElement("button");
+	button.dataset.mode = mode;
 
 	const heading = document.createElement("h2");
 	heading.textContent = title;
