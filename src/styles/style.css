@@ -92,7 +92,9 @@ body {
 	background-repeat: repeat;
 	width: 100vw;
 	height: 100vh;
-    cursor: url('../assets/images/markers/cursor.png') 0 0, auto;
+	cursor:
+		url("../assets/images/markers/cursor.png") 0 0,
+		auto;
 }
 
 .mode-select {
@@ -168,12 +170,14 @@ h1 + img {
 	align-items: flex-start;
 	background-color: #0b1220;
 	border: solid 1px #223047;
-    cursor: url('../assets/images/markers/cursor.png') 0 0, pointer;
+	cursor:
+		url("../assets/images/markers/cursor.png") 0 0,
+		pointer;
 }
 
 .mode-buttons > button:focus-visible {
-	outline: 2px solid #E8543E;
-    outline-offset: 2px;
+	outline: 2px solid #e8543e;
+	outline-offset: 2px;
 }
 
 .mode-buttons > button > h2 {
@@ -208,6 +212,163 @@ h1 + img {
 .mode-buttons > button:hover {
 	background-color: #101b2e;
 	border: solid 1px #3a5578;
+}
+
+.ship-placement-mode {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.ship-placement-mode > div {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 20px;
+}
+
+.ship-placement-mode > div > h2 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	font-size: 1.25rem;
+	letter-spacing: 1px;
+}
+
+.ship-placement-mode > div > h2 + img {
+	width: 48px;
+	height: 48px;
+	object-fit: none;
+	object-position: 0 0;
+	overflow: hidden;
+	transform: scale(1.5);
+	image-rendering: pixelated;
+	margin-bottom: 20px ;
+}
+
+.ship-placement-mode > button {
+	padding: 30px;
+	background-color: #0b1220;
+	border: solid 1px #223047;
+	font-family: "Space Mono";
+	color: #7c93b3;
+	font-size: 1rem;
+	text-align: start;
+	cursor:
+		url("../assets/images/markers/cursor.png") 0 0,
+		auto;
+}
+
+.ship-placement-mode > button:focus-visible {
+	outline: 2px solid #e8543e;
+	outline-offset: 2px;
+}
+
+.ship-placement-mode > button:hover {
+	background-color: #101b2e;
+	border: solid 1px #3a5578;
+}
+
+.board {
+	display: flex;
+	align-items: center;
+}
+
+.ship-placement-mode > .board > .grid {
+	display: grid;
+	grid-template-rows: repeat(10, 1fr);
+	grid-template-columns: repeat(10, 1fr);
+	gap: 0;
+	border-radius: 20px;
+	margin: 30px;
+	border: 30px solid rgba(34, 48, 71, 0.5);
+}
+
+.grid-element {
+	width: 60px;
+	height: 60px;
+	border: 1px solid rgba(34, 48, 71, 0.5);
+}
+
+.ships {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	width: 400px;
+}
+
+.board > .ships > .floating-ship {
+	object-fit: fill;
+	image-rendering: pixelated;
+}
+
+.board > .ships > .floating-ship--saturn-v {
+	width: 250px;
+	max-height: 50px;
+}
+
+.ships > .floating-ship--falcon-heavy {
+	width: 200px;
+	max-height: 50px;
+}
+
+.ships > .floating-ship--falcon9,
+.ships > .floating-ship--voyager {
+	width: 150px;
+	max-height: 50px;
+}
+
+.ships > .floating-ship--sputnik {
+	width: 100px;
+	min-height: 50px;
+}
+
+.ships > .floating-ship--saturn-v {
+	top: 0px;
+	left: 0px;
+}
+
+.ships > .floating-ship--falcon-heavy[data-ship-index="0"] {
+	top: 90px;
+	left: 0px;
+}
+.ships > .floating-ship--falcon-heavy[data-ship-index="1"] {
+	top: 180px;
+	left: 0px;
+}
+
+.ships > .floating-ship--falcon9[data-ship-index="0"] {
+	top: 270px;
+	left: 0px;
+}
+.ships > .floating-ship--falcon9[data-ship-index="1"] {
+	top: 360px;
+	left: 0px;
+}
+
+.ships > .floating-ship--voyager[data-ship-index="0"] {
+	top: 450px;
+	left: 0px;
+}
+.ships > .floating-ship--voyager[data-ship-index="1"] {
+	top: 540px;
+	left: 0px;
+}
+
+.ships > .floating-ship--sputnik[data-ship-index="0"] {
+	top: 630px;
+	left: 0px;
+}
+.ships > .floating-ship--sputnik[data-ship-index="1"] {
+	top: 630px;
+	left: 140px;
+}
+.ships > .floating-ship--sputnik[data-ship-index="2"] {
+	top: 630px;
+	left: 280px;
 }
 
 .decoration {

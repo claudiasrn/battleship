@@ -2,12 +2,19 @@ import hitMarkerSrc from "./assets/images/markers/hit-marker.png";
 import player1IdleSrc from "./assets/images/characters/player1/IdlePlayer1.png";
 import botIdleSrc from "./assets/images/characters/bot/IdleBot.png";
 import player2IdleSrc from "./assets/images/characters/player2/IdlePlayer2.png";
-import saturnVSrc from "./assets/images/ships/Saturn-V-moving.png";
-import falconHeavySrc from "./assets/images/ships/Falcon-Heavy-moving.png";
-import sputnikSrc from "./assets/images/ships/Sputnik-moving.png";
+import saturnVMovingSrc from "./assets/images/ships/Saturn-V-moving.png";
+import falconHeavyMovingSrc from "./assets/images/ships/Falcon-Heavy-moving.png";
+import sputnikMovingSrc from "./assets/images/ships/Sputnik-moving.png";
+import saturnVSrc from "./assets/images/ships/Saturn-V.png";
+import falconHeavySrc from "./assets/images/ships/Falcon-Heavy.png";
+import falcon9Src from "./assets/images/ships/Falcon9.png";
+import voyagerSrc from "./assets/images/ships/Voyager.png";
+import sputnikSrc from "./assets/images/ships/Sputnik.png";
 import starDotSrc from "./assets/images/decoration/star-dot.png";
 import starLargeSrc from "./assets/images/decoration/star-large.png";
 import starSparkleSrc from "./assets/images/decoration/star-sparkle.png";
+
+
 
 export function renderModeSelect() {
 	const container = document.createElement("div");
@@ -62,7 +69,7 @@ export function renderModeSelect() {
 
 	buttonsContainer.append(botButton, humanButton);
 
-	const decoration = createDecoration();
+	const decoration = createModeSelectDecoration();
 
 	container.append(
 		wordmark,
@@ -100,14 +107,14 @@ function createModeButton(title, description, imgSrc) {
 	return button;
 }
 
-function createDecoration() {
+function createModeSelectDecoration() {
 	const decoration = document.createElement("div");
 	decoration.classList.add("decoration");
 
 	const ships = [
-		{ src: saturnVSrc, name: "saturn-v" },
-		{ src: falconHeavySrc, name: "falcon-heavy" },
-		{ src: sputnikSrc, name: "sputnik" },
+		{ src: saturnVMovingSrc, name: "saturn-v" },
+		{ src: falconHeavyMovingSrc, name: "falcon-heavy" },
+		{ src: sputnikMovingSrc, name: "sputnik" },
 	];
 
 	ships.forEach((ship) => {
@@ -118,11 +125,102 @@ function createDecoration() {
 		decoration.append(img);
 	});
 
+	decoration.append(...createStarField());
+
+	return decoration;
+}
+
+export function renderShipPlacement(playerName, playerNumber) {
+	const container = document.createElement("div");
+	container.classList.add("ship-placement-mode");
+
+	const header = document.createElement("div");
+
+	const heading = document.createElement("h2");
+	heading.textContent = `PLACE YOUR FLEET: ${playerName}`;
+
+	const playerImg = document.createElement("img");
+	playerImg.src = playerNumber === 2 ? player2IdleSrc : player1IdleSrc;
+	playerImg.alt = "";
+	playerImg.dataset.spriteFrames = 4;
+	playerImg.dataset.frameWidth = 48;
+	playerImg.dataset.frameHeight = 48;
+
+	header.append(heading, playerImg);
+
+	const board = document.createElement("div");
+	board.classList.add("board");
+
+	const grid = document.createElement("div");
+	grid.classList.add("grid");
+
+	for (let i = 0; i < 100; i++) {
+		const gridElement = document.createElement("div");
+		gridElement.classList.add("grid-element");
+		gridElement.dataset.index = i;
+		grid.append(gridElement);
+	}
+
+	const ships = createPlacementShips();
+
+	board.append(grid, ships);
+
+	const confirmButton = document.createElement("button");
+	confirmButton.textContent = "READY FOR GALACTIC BATTLE";
+
+	const decoration = createShipPlacementDecoration();
+
+	container.append(header, board, confirmButton, decoration);
+
+	return container;
+}
+
+function createPlacementShips() {
+	const shipsContainer = document.createElement("div");
+	shipsContainer.classList.add("ships");
+
+	const shipData = [
+		{ src: saturnVSrc, name: "saturn-v", length: 5, count: 1 },
+		{ src: falconHeavySrc, name: "falcon-heavy", length: 4, count: 2 },
+		{ src: falcon9Src, name: "falcon9", length: 3, count: 2 },
+		{ src: voyagerSrc, name: "voyager", length: 3, count: 2 },
+		{ src: sputnikSrc, name: "sputnik", length: 2, count: 3 },
+	];
+
+	shipData.forEach((ship) => {
+		for (let i = 0; i < ship.count; i++) {
+			const img = document.createElement("img");
+			img.src = ship.src;
+			img.alt = ship.name;
+			img.classList.add("floating-ship", `floating-ship--${ship.name}`);
+			img.dataset.shipName = ship.name;
+			img.dataset.shipLength = ship.length;
+			img.dataset.orientation = "horizontal";
+			img.dataset.shipIndex = i;
+			shipsContainer.append(img);
+		}
+	});
+
+	return shipsContainer;
+}
+
+function createShipPlacementDecoration() {
+	const decoration = document.createElement("div");
+	decoration.classList.add("decoration");
+
+	decoration.append(...createStarField());
+
+	return decoration;
+}
+
+function createStarField() {
 	const stars = [
 		{ src: starDotSrc, name: "dot" },
 		{ src: starLargeSrc, name: "large" },
 		{ src: starSparkleSrc, name: "sparkle" },
 	];
+
+	const starElements = [];
 
 	stars.forEach((star) => {
 		for (let i = 0; i < 11; i++) {
@@ -134,9 +232,9 @@ function createDecoration() {
 				`decoration-star--${star.name}`,
 				`decoration-star--${star.name}-${i}`,
 			);
-			decoration.append(img);
+			starElements.push(img);
 		}
 	});
 
-	return decoration;
+	return starElements;
 }
