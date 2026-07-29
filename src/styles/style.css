@@ -60,31 +60,36 @@ h6 {
 	text-wrap: balance;
 }
 
+/* Fonts */
+
 /* press-start-2p-regular - latin */
 @font-face {
-	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-display: swap;
 	font-family: "Press Start 2P";
 	font-style: normal;
 	font-weight: 400;
-	src: url("./fonts/press-start-2p-v16-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+	src: url("./fonts/press-start-2p-v16-latin-regular.woff2") format("woff2");
 }
 
 /* space-mono-regular - latin */
 @font-face {
-	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-display: swap;
 	font-family: "Space Mono";
 	font-style: normal;
 	font-weight: 400;
-	src: url("./fonts/space-mono-v17-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+	src: url("./fonts/space-mono-v17-latin-regular.woff2") format("woff2");
 }
+
 /* space-mono-700 - latin */
 @font-face {
-	font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+	font-display: swap;
 	font-family: "Space Mono";
 	font-style: normal;
 	font-weight: 700;
-	src: url("./fonts/space-mono-v17-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+	src: url("./fonts/space-mono-v17-latin-700.woff2") format("woff2");
 }
+
+/* Base */
 
 body {
 	background-color: #050810;
@@ -96,6 +101,17 @@ body {
 		url("../assets/images/markers/cursor.png") 0 0,
 		auto;
 }
+
+h1 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	letter-spacing: 2px;
+	font-size: 2.5rem;
+}
+
+/* ============================
+   Mode select screen
+   ============================ */
 
 .mode-select {
 	display: flex;
@@ -114,14 +130,7 @@ body {
 	padding: 10px 15px;
 }
 
-h1 {
-	font-family: "Press Start 2P";
-	color: #e8eef7;
-	letter-spacing: 2px;
-	font-size: 2.5rem;
-}
-
-h1 + img {
+.wordmark h1 + img {
 	width: 48px;
 	height: 48px;
 	object-fit: none;
@@ -175,6 +184,11 @@ h1 + img {
 		pointer;
 }
 
+.mode-buttons > button:hover {
+	background-color: #101b2e;
+	border: solid 1px #3a5578;
+}
+
 .mode-buttons > button:focus-visible {
 	outline: 2px solid #e8543e;
 	outline-offset: 2px;
@@ -209,10 +223,9 @@ h1 + img {
 	display: flex;
 }
 
-.mode-buttons > button:hover {
-	background-color: #101b2e;
-	border: solid 1px #3a5578;
-}
+/* ============================
+   Ship placement screen
+   ============================ */
 
 .ship-placement-mode {
 	width: 100%;
@@ -246,7 +259,7 @@ h1 + img {
 	overflow: hidden;
 	transform: scale(1.5);
 	image-rendering: pixelated;
-	margin-bottom: 20px ;
+	margin-bottom: 20px;
 }
 
 .ship-placement-mode > button {
@@ -262,14 +275,14 @@ h1 + img {
 		auto;
 }
 
-.ship-placement-mode > button:focus-visible {
-	outline: 2px solid #e8543e;
-	outline-offset: 2px;
-}
-
 .ship-placement-mode > button:hover {
 	background-color: #101b2e;
 	border: solid 1px #3a5578;
+}
+
+.ship-placement-mode > button:focus-visible {
+	outline: 2px solid #e8543e;
+	outline-offset: 2px;
 }
 
 .board {
@@ -308,68 +321,235 @@ h1 + img {
 .board > .ships > .floating-ship--saturn-v {
 	width: 250px;
 	max-height: 50px;
-}
-
-.ships > .floating-ship--falcon-heavy {
-	width: 200px;
-	max-height: 50px;
-}
-
-.ships > .floating-ship--falcon9,
-.ships > .floating-ship--voyager {
-	width: 150px;
-	max-height: 50px;
-}
-
-.ships > .floating-ship--sputnik {
-	width: 100px;
-	min-height: 50px;
-}
-
-.ships > .floating-ship--saturn-v {
 	top: 0px;
 	left: 0px;
 }
 
-.ships > .floating-ship--falcon-heavy[data-ship-index="0"] {
+.board > .ships > .floating-ship--falcon-heavy {
+	width: 200px;
+	max-height: 50px;
+}
+
+.board > .ships > .floating-ship--falcon-heavy[data-ship-index="0"] {
 	top: 90px;
 	left: 0px;
 }
-.ships > .floating-ship--falcon-heavy[data-ship-index="1"] {
+.board > .ships > .floating-ship--falcon-heavy[data-ship-index="1"] {
 	top: 180px;
 	left: 0px;
 }
 
-.ships > .floating-ship--falcon9[data-ship-index="0"] {
+.board > .ships > .floating-ship--falcon9,
+.board > .ships > .floating-ship--voyager {
+	width: 150px;
+	max-height: 50px;
+}
+
+.board > .ships > .floating-ship--falcon9[data-ship-index="0"] {
 	top: 270px;
 	left: 0px;
 }
-.ships > .floating-ship--falcon9[data-ship-index="1"] {
+.board > .ships > .floating-ship--falcon9[data-ship-index="1"] {
 	top: 360px;
 	left: 0px;
 }
 
-.ships > .floating-ship--voyager[data-ship-index="0"] {
+.board > .ships > .floating-ship--voyager[data-ship-index="0"] {
 	top: 450px;
 	left: 0px;
 }
-.ships > .floating-ship--voyager[data-ship-index="1"] {
+.board > .ships > .floating-ship--voyager[data-ship-index="1"] {
 	top: 540px;
 	left: 0px;
 }
 
-.ships > .floating-ship--sputnik[data-ship-index="0"] {
+.board > .ships > .floating-ship--sputnik {
+	width: 100px;
+	min-height: 50px;
+}
+
+.board > .ships > .floating-ship--sputnik[data-ship-index="0"] {
 	top: 630px;
 	left: 0px;
 }
-.ships > .floating-ship--sputnik[data-ship-index="1"] {
+.board > .ships > .floating-ship--sputnik[data-ship-index="1"] {
 	top: 630px;
 	left: 140px;
 }
-.ships > .floating-ship--sputnik[data-ship-index="2"] {
+.board > .ships > .floating-ship--sputnik[data-ship-index="2"] {
 	top: 630px;
 	left: 280px;
 }
+
+/* ============================
+   Battle screen
+   ============================ */
+
+.battle-mode {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.board-side {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+.board-side > h2 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	font-size: 1.25rem;
+	letter-spacing: 1px;
+	text-align: center;
+	width: 100%;
+}
+
+.board-side > .grid {
+	display: grid;
+	grid-template-rows: repeat(10, 1fr);
+	grid-template-columns: repeat(10, 1fr);
+	gap: 0;
+	margin: 40px;
+	border-radius: 20px;
+	border: 30px solid rgba(34, 48, 71, 0.5);
+}
+
+.characters {
+	display: flex;
+}
+
+.character-slot > img {
+	min-width: 48px;
+	max-width: 48px;
+	height: 48px;
+	object-fit: none;
+	object-position: 0 0;
+	overflow: hidden;
+	transform: scale(1.5);
+	image-rendering: pixelated;
+	margin-bottom: 20px;
+}
+
+.character-slot + .character-slot > img {
+	transform: scale(1.5) scaleX(-1);
+}
+
+.grid-element {
+	position: relative;
+}
+
+.cell-ship-sprite {
+	position: absolute;
+	max-height: 50px;
+	object-fit: fill;
+	image-rendering: pixelated;
+	pointer-events: none;
+}
+
+.cell-ship-sprite.vertical.cell-ship-sprite--sputnik {
+	top: 10;
+	left: -3;
+}
+
+.cell-ship-sprite.horizontal.cell-ship-sprite--sputnik {
+	top: 10;
+	left: 10;
+}
+
+.cell-ship-sprite.vertical.cell-ship-sprite--saturn-v {
+	top: 25;
+	left: 4;
+}
+
+.cell-ship-sprite.horizontal.cell-ship-sprite--saturn-v {
+	top: 5;
+	left: 25;
+}
+
+.cell-ship-sprite.vertical.cell-ship-sprite--falcon-heavy {
+	top: 20;
+	left: 4;
+}
+
+.cell-ship-sprite.horizontal.cell-ship-sprite--falcon-heavy {
+	top: 4;
+	left: 20;
+}
+
+.cell-ship-sprite.vertical.cell-ship-sprite--falcon9 {
+	top: 13;
+	left: 4;
+}
+
+.cell-ship-sprite.horizontal.cell-ship-sprite--falcon9 {
+	top: 5;
+	left: 13;
+}
+
+.cell-ship-sprite.vertical.cell-ship-sprite--voyager {
+	top: 15;
+	left: 4;
+}
+
+.cell-ship-sprite.horizontal.cell-ship-sprite--voyager {
+	top: 4;
+	left: 15;
+}
+
+.cell-ship-sprite--saturn-v {
+	min-width: 250px;
+}
+.cell-ship-sprite--falcon-heavy {
+	min-width: 200px;
+}
+.cell-ship-sprite--falcon9,
+.cell-ship-sprite--voyager {
+	min-width: 150px;
+}
+.cell-ship-sprite--sputnik {
+	min-width: 100px;
+}
+
+.cell-ship-sprite.vertical {
+	transform-origin: top left;
+	transform: rotate(90deg) translateY(-50px);
+}
+
+.cell-ship-sprite.sunk {
+	opacity: 0.7;
+}
+
+.cell-marker {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	width: 70%;
+	height: 70%;
+	mask-size: contain;
+	mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	image-rendering: pixelated;
+	pointer-events: none;
+	z-index: 5;
+}
+
+.cell-marker.hit {
+	background-color: #d85a30;
+}
+
+.cell-marker.miss {
+	background-color: rgba(34, 48, 71, 1);
+}
+
+/* ============================
+   Decoration (shared across screens)
+   ============================ */
 
 .decoration {
 	position: absolute;

@@ -1,4 +1,6 @@
+import { Ship } from "./Ship.js";
 import hitMarkerSrc from "./assets/images/markers/hit-marker.png";
+import missMarkerSrc from "./assets/images/markers/miss-marker.png";
 import player1IdleSrc from "./assets/images/characters/player1/IdlePlayer1.png";
 import botIdleSrc from "./assets/images/characters/bot/IdleBot.png";
 import player2IdleSrc from "./assets/images/characters/player2/IdlePlayer2.png";
@@ -14,7 +16,13 @@ import starDotSrc from "./assets/images/decoration/star-dot.png";
 import starLargeSrc from "./assets/images/decoration/star-large.png";
 import starSparkleSrc from "./assets/images/decoration/star-sparkle.png";
 
-
+const shipSprites = {
+	"saturn-v": saturnVSrc,
+	"falcon-heavy": falconHeavySrc,
+	falcon9: falcon9Src,
+	voyager: voyagerSrc,
+	sputnik: sputnikSrc,
+};
 
 export function renderModeSelect() {
 	const container = document.createElement("div");
@@ -195,7 +203,6 @@ function createPlacementShips() {
 			img.classList.add("floating-ship", `floating-ship--${ship.name}`);
 			img.dataset.shipName = ship.name;
 			img.dataset.shipLength = ship.length;
-			img.dataset.orientation = "horizontal";
 			img.dataset.shipIndex = i;
 			shipsContainer.append(img);
 		}
@@ -205,6 +212,165 @@ function createPlacementShips() {
 }
 
 function createShipPlacementDecoration() {
+	const decoration = document.createElement("div");
+	decoration.classList.add("decoration");
+
+	decoration.append(...createStarField());
+
+	return decoration;
+}
+
+export function renderBattle(
+	activePlayerNumber,
+	gameMode,
+	ownShipBoard,
+	ownAttackBoard,
+	enemyShipBoard,
+	enemyAttackBoard,
+) {
+	const container = document.createElement("div");
+	container.classList.add("battle-mode");
+
+	const yourSrc = activePlayerNumber === 2 ? player2IdleSrc : player1IdleSrc;
+	const enemySrc =
+		gameMode === "bot"
+			? botIdleSrc
+			: activePlayerNumber === 2
+				? player1IdleSrc
+				: player2IdleSrc;
+
+	const yourSide = createBoardSide(
+		"YOUR FLEET",
+		true,
+		ownShipBoard,
+		ownAttackBoard,
+	);
+
+	const characters = createCharacters(yourSrc, enemySrc);
+
+	const enemySide = createBoardSide(
+		"ENEMY FLEET",
+		false,
+		enemyShipBoard,
+		enemyAttackBoard,
+	);
+
+	const decoration = createBattleDecoration();
+
+	container.append(yourSide, characters, enemySide, decoration);
+
+	return container;
+}
+
+function createBoardSide(label, isOwnBoard, shipBoardData, attackBoardData) {
+	const side = document.createElement("div");
+	side.classList.add("board-side");
+	if (isOwnBoard) side.classList.add("board-side--own");
+
+	const heading = document.createElement("h2");
+	heading.textContent = label;
+
+	const grid = document.createElement("div");
+	grid.classList.add("grid");
+	if (!isOwnBoard) grid.classList.add("grid--enemy");
+
+	for (let row = 0; row < 10; row++) {
+		for (let col = 0; col < 10; col++) {
+			const cell = document.createElement("div");
+			cell.classList.add("grid-element");
+			cell.dataset.row = row;
+			cell.dataset.col = col;
+
+			const shipCell = shipBoardData[row][col];
+			const attackCell = attackBoardData[row][col];
+
+			if (attackCell === "w") {
+				cell.classList.add("miss");
+				cell.append(createMarkerImg(missMarkerSrc, "miss"));
+			} else if (attackCell === "x") {
+				cell.classList.add("hit");
+				if (shipCell instanceof Ship && (isOwnBoard || shipCell.isSunk())) {
+					if (shipCell.isSunk()) cell.classList.add("sunk");
+					const [startRow, startCol] = shipCell.coordinates[0];
+					if (row === startRow && col === startCol) {
+						cell.append(createShipSprite(shipCell));
+					}
+				}
+				cell.append(createMarkerImg(hitMarkerSrc, "hit"));
+			} else if (isOwnBoard && shipCell instanceof Ship) {
+				cell.classList.add("has-ship");
+				const [startRow, startCol] = shipCell.coordinates[0];
+				if (row === startRow && col === startCol) {
+					cell.append(createShipSprite(shipCell));
+				}
+			}
+
+			grid.append(cell);
+		}
+	}
+
+	side.append(heading, grid);
+
+	return side;
+}
+
+function createMarkerImg(src, type) {
+	const marker = document.createElement("div");
+	marker.classList.add("cell-marker", type);
+	marker.style.maskImage = `url(${src})`;
+	marker.style.webkitMaskImage = `url(${src})`;
+	return marker;
+}
+
+function createShipSprite(ship) {
+	const coordinates = ship.coordinates;
+	const isHorizontal =
+		coordinates.length === 1 || coordinates[0][0] === coordinates[1][0];
+
+	const img = document.createElement("img");
+	img.src = shipSprites[ship.name];
+	img.alt = "";
+	img.classList.add(
+		"cell-ship-sprite",
+		`cell-ship-sprite--${ship.name}`,
+		isHorizontal ? "horizontal" : "vertical",
+	);
+	if (ship.isSunk()) img.classList.add("sunk");
+
+	return img;
+}
+
+function createCharacters(yourSrc, enemySrc) {
+	const characters = document.createElement("div");
+	characters.classList.add("characters");
+
+	const you = createCharacterSlot("YOU", yourSrc);
+	const enemy = createCharacterSlot("ENEMY", enemySrc);
+
+	characters.append(you, enemy);
+
+	return characters;
+}
+
+function createCharacterSlot(label, src) {
+	const slot = document.createElement("div");
+	slot.classList.add("character-slot");
+
+	const img = document.createElement("img");
+	img.src = src;
+	img.alt = "";
+	img.classList.add("battle-character");
+	img.dataset.spriteFrames = 4;
+	img.dataset.frameWidth = 48;
+	img.dataset.frameHeight = 48;
+	img.dataset.state = "idle";
+
+	slot.append(img);
+
+	return slot;
+}
+
+function createBattleDecoration() {
 	const decoration = document.createElement("div");
 	decoration.classList.add("decoration");
 
