@@ -206,7 +206,11 @@ function createPlacementShips() {
 			const img = document.createElement("img");
 			img.src = ship.src;
 			img.alt = ship.name;
-			img.classList.add("floating-ship", `floating-ship--${ship.name}`);
+			img.classList.add(
+				"floating-ship",
+				`floating-ship--${ship.name}`,
+				"horizontal",
+			);
 			img.dataset.shipName = ship.name;
 			img.dataset.shipLength = ship.length;
 			img.dataset.shipIndex = i;

@@ -97,9 +97,6 @@ body {
 	background-repeat: repeat;
 	width: 100vw;
 	height: 100vh;
-	cursor:
-		url("../assets/images/markers/cursor.png") 0 0,
-		auto;
 }
 
 h1 {
@@ -307,10 +304,12 @@ h1 {
 }
 
 .ships {
-	display: flex;
-	flex-direction: column;
-	gap: 16px;
+	position: relative;
 	width: 400px;
+	height: 700px;
+}
+.floating-ship {
+	position: absolute;
 }
 
 .board > .ships > .floating-ship {
@@ -321,22 +320,11 @@ h1 {
 .board > .ships > .floating-ship--saturn-v {
 	width: 250px;
 	max-height: 50px;
-	top: 0px;
-	left: 0px;
 }
 
 .board > .ships > .floating-ship--falcon-heavy {
 	width: 200px;
 	max-height: 50px;
-}
-
-.board > .ships > .floating-ship--falcon-heavy[data-ship-index="0"] {
-	top: 90px;
-	left: 0px;
-}
-.board > .ships > .floating-ship--falcon-heavy[data-ship-index="1"] {
-	top: 180px;
-	left: 0px;
 }
 
 .board > .ships > .floating-ship--falcon9,
@@ -345,41 +333,17 @@ h1 {
 	max-height: 50px;
 }
 
-.board > .ships > .floating-ship--falcon9[data-ship-index="0"] {
-	top: 270px;
-	left: 0px;
-}
-.board > .ships > .floating-ship--falcon9[data-ship-index="1"] {
-	top: 360px;
-	left: 0px;
-}
-
-.board > .ships > .floating-ship--voyager[data-ship-index="0"] {
-	top: 450px;
-	left: 0px;
-}
-.board > .ships > .floating-ship--voyager[data-ship-index="1"] {
-	top: 540px;
-	left: 0px;
-}
-
 .board > .ships > .floating-ship--sputnik {
 	width: 100px;
 	min-height: 50px;
 }
 
-.board > .ships > .floating-ship--sputnik[data-ship-index="0"] {
-	top: 630px;
-	left: 0px;
+
+.floating-ship.vertical {
+	transform-origin: center center;
+	transform: rotate(90deg);
 }
-.board > .ships > .floating-ship--sputnik[data-ship-index="1"] {
-	top: 630px;
-	left: 140px;
-}
-.board > .ships > .floating-ship--sputnik[data-ship-index="2"] {
-	top: 630px;
-	left: 280px;
-}
+
 
 /* ============================
    Battle screen
