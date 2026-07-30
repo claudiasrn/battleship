@@ -310,6 +310,9 @@ h1 {
 }
 .floating-ship {
 	position: absolute;
+	-webkit-user-drag: none;
+	user-select: none;
+	touch-action: none;
 }
 
 .board > .ships > .floating-ship {
@@ -342,6 +345,12 @@ h1 {
 .floating-ship.vertical {
 	transform-origin: center center;
 	transform: rotate(90deg);
+}
+
+.floating-ship.dragging {
+	z-index: 100;
+	opacity: 0.85;
+	pointer-events: none;
 }
 
 

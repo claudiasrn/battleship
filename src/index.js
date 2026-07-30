@@ -1,7 +1,7 @@
 import "./styles/style.css";
 import { renderModeSelect, renderShipPlacement } from "./DOM.js";
 import { initSpriteAnimations, blinkElement } from "./animation.js";
-import { initShipRotation, initShipTrayLayout } from "./placement.js";
+import { initShipRotation, initShipTrayLayout, initShipDragging } from "./placement.js";
 
 let stopCurrentAnimations = null;
 
@@ -36,6 +36,7 @@ function startShipPlacement(gameMode) {
 	mount(container);
 	initShipTrayLayout(container);
 	initShipRotation(container);
+	initShipDragging(container);
 }
 
 startApp();

@@ -204,6 +204,7 @@ function createPlacementShips() {
 	shipData.forEach((ship) => {
 		for (let i = 0; i < ship.count; i++) {
 			const img = document.createElement("img");
+			img.draggable = false;
 			img.src = ship.src;
 			img.alt = ship.name;
 			img.classList.add(
