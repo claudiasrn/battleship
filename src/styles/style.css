@@ -232,6 +232,10 @@ h1 {
 	align-items: center;
 	justify-content: center;
 	position: relative;
+	user-select: none;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 }
 
 .ship-placement-mode > div {
@@ -259,32 +263,63 @@ h1 {
 	margin-bottom: 20px;
 }
 
-.ship-placement-mode > button {
+.ship-placement-mode > .button-group {
+	display: flex;
+	gap: 20px;
+}
+
+.ship-placement-mode > .button-group > button {
 	padding: 30px;
-	background-color: #0b1220;
-	border: solid 1px #223047;
 	font-family: "Space Mono";
-	color: #7c93b3;
 	font-size: 1rem;
-	text-align: start;
+	text-align: center;
 	cursor:
 		url("../assets/images/markers/cursor.png") 0 0,
 		auto;
 }
 
-.ship-placement-mode > button:hover {
-	background-color: #101b2e;
-	border: solid 1px #3a5578;
-}
-
-.ship-placement-mode > button:focus-visible {
+.ship-placement-mode > .button-group > button:focus-visible {
 	outline: 2px solid #e8543e;
 	outline-offset: 2px;
 }
 
-.board {
-	display: flex;
+/* Primary action */
+.ship-placement-mode > .button-group > .confirm-button {
+	background-color: #0b1220;
+	border: solid 1px #d85a30;
+	color: #e8eef7;
+}
+
+.ship-placement-mode > .button-group > .confirm-button:hover {
+	background-color: #1a0f0b;
+	border-color: #e8543e;
+}
+
+/* Secondary action */
+.ship-placement-mode > .button-group > .randomize-fleet-button {
+	background-color: transparent;
+	border: dashed 1px #223047;
+	color: #7c93b3;
+}
+
+.ship-placement-mode > .button-group > .randomize-fleet-button:hover {
+	background-color: #101b2e;
+	border-color: #3a5578;
+}
+
+.ship-placement-mode > .board {
+	display: grid;
+	grid-template-columns: 1fr auto 1fr;
 	align-items: center;
+	width: 100%;
+}
+
+.board-spacer {
+	justify-self: stretch;
+}
+
+.ships {
+	justify-self: start;
 }
 
 .ship-placement-mode > .board > .grid {
@@ -303,6 +338,10 @@ h1 {
 	border: 1px solid rgba(34, 48, 71, 0.5);
 }
 
+.grid-element.has-ship {
+	background-color: rgba(124, 147, 179, 0.15);
+}
+
 .ships {
 	position: relative;
 	width: 400px;
@@ -313,32 +352,29 @@ h1 {
 	-webkit-user-drag: none;
 	user-select: none;
 	touch-action: none;
-}
-
-.board > .ships > .floating-ship {
 	object-fit: fill;
 	image-rendering: pixelated;
 }
 
-.board > .ships > .floating-ship--saturn-v {
+.floating-ship--saturn-v {
 	width: 250px;
 	max-height: 50px;
 }
 
-.board > .ships > .floating-ship--falcon-heavy {
+.floating-ship--falcon-heavy {
 	width: 200px;
 	max-height: 50px;
 }
 
-.board > .ships > .floating-ship--falcon9,
-.board > .ships > .floating-ship--voyager {
+.floating-ship--falcon9,
+.floating-ship--voyager {
 	width: 150px;
 	max-height: 50px;
 }
 
-.board > .ships > .floating-ship--sputnik {
+.floating-ship--sputnik {
 	width: 100px;
-	min-height: 50px;
+	max-height: 50px;
 }
 
 
@@ -420,6 +456,11 @@ h1 {
 	object-fit: fill;
 	image-rendering: pixelated;
 	pointer-events: none;
+}
+
+.ship-placement-mode .cell-ship-sprite {
+	pointer-events: auto;
+	z-index: 1;
 }
 
 .cell-ship-sprite.vertical.cell-ship-sprite--sputnik {
