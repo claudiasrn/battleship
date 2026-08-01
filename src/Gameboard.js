@@ -27,7 +27,7 @@ export class Gameboard {
 		}
 
 		this.#ships.push(ship);
-		return true;
+		return ship;
 	}
 
 	receiveAttack(coordinate) {
@@ -52,6 +52,15 @@ export class Gameboard {
 	isOver() {
 		if (this.#ships.length === 0) return undefined;
 		return this.#ships.every((ship) => ship.isSunk());
+	}
+
+	removeShip(ship) {
+		for (let coordinate of ship.coordinates) {
+			if (this.#shipBoard[coordinate[0]][coordinate[1]] === ship) {
+				this.#shipBoard[coordinate[0]][coordinate[1]] = "o";
+			}
+		}
+		this.#ships = this.#ships.filter((s) => s !== ship);
 	}
 }
 
