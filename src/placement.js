@@ -8,6 +8,18 @@ const SHIP_LENGTHS = {
 	sputnik: 2,
 };
 
+const FLEET_COMPOSITION = [
+	{ name: "saturn-v", length: 5, count: 1 },
+	{ name: "falcon-heavy", length: 4, count: 2 },
+	{ name: "falcon9", length: 3, count: 2 },
+	{ name: "voyager", length: 3, count: 2 },
+	{ name: "sputnik", length: 2, count: 3 },
+];
+
+export function isFleetPlaced() {
+	return document.querySelectorAll(".floating-ship").length === 0;
+}
+
 export function initShipTrayLayout(root) {
 	const ships = root.querySelectorAll(".ships .floating-ship");
 	let currentTop = 0;
@@ -524,4 +536,56 @@ export function randomizeShipPlacement(root, gameboard) {
 	for (let attempt = 0; attempt < OUTER_ATTEMPTS; attempt++) {
 		if (tryRandomizeAll(ships, grid, gameboard)) return;
 	}
+}
+
+function buildFleetList() {
+	const fleet = [];
+	FLEET_COMPOSITION.forEach(({ name, length, count }) => {
+		for (let i = 0; i < count; i++) fleet.push({ name, length });
+	});
+	return fleet;
+}
+
+function placeOneShipRandomly(gameboard, name, length) {
+	const MAX_ATTEMPTS = 100;
+
+	for (let attempt = 0; attempt < MAX_ATTEMPTS; attempt++) {
+		const isHorizontal = Math.random() < 0.5;
+		const maxRow = isHorizontal ? 9 : 10 - length;
+		const maxCol = isHorizontal ? 10 - length : 9;
+
+		const row = Math.floor(Math.random() * (maxRow + 1));
+		const col = Math.floor(Math.random() * (maxCol + 1));
+
+		const coordinates = getCoveredCoordinates(row, col, length, isHorizontal);
+		const placedShip = gameboard.placeShip(coordinates, name);
+		if (placedShip) return placedShip;
+	}
+
+	return null;
+}
+
+export function placeFleetRandomly(gameboard) {
+	const OUTER_ATTEMPTS = 50;
+	const fleet = buildFleetList();
+
+	for (let attempt = 0; attempt < OUTER_ATTEMPTS; attempt++) {
+		const placedShips = [];
+		let success = true;
+
+		for (const { name, length } of shuffle(fleet.slice())) {
+			const placedShip = placeOneShipRandomly(gameboard, name, length);
+			if (!placedShip) {
+				success = false;
+				break;
+			}
+			placedShips.push(placedShip);
+		}
+
+		if (success) return true;
+
+		placedShips.forEach((ship) => gameboard.removeShip(ship));
+	}
+
+	return false;
 }
