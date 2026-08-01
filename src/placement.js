@@ -517,7 +517,7 @@ function tryRandomizeAll(ships, grid, gameboard) {
 export function randomizeShipPlacement(root, gameboard) {
 	const grid = root.querySelector(".grid");
 	const ships = Array.from(
-		root.querySelectorAll(".floating-ship, .cell-ship-sprite"),
+		document.querySelectorAll(".floating-ship, .cell-ship-sprite"),
 	);
 
 	const OUTER_ATTEMPTS = 50;
