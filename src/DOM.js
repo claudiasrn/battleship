@@ -165,26 +165,41 @@ export function renderShipPlacement(playerName, playerNumber) {
 	const board = document.createElement("div");
 	board.classList.add("board");
 
+	const boardSpacer = document.createElement("div");
+	boardSpacer.classList.add("board-spacer");
+
 	const grid = document.createElement("div");
 	grid.classList.add("grid");
 
-	for (let i = 0; i < 100; i++) {
-		const gridElement = document.createElement("div");
-		gridElement.classList.add("grid-element");
-		gridElement.dataset.index = i;
-		grid.append(gridElement);
+	for (let row = 0; row < 10; row++) {
+		for (let col = 0; col < 10; col++) {
+			const gridElement = document.createElement("div");
+			gridElement.classList.add("grid-element");
+			gridElement.dataset.row = row;
+			gridElement.dataset.col = col;
+			grid.append(gridElement);
+		}
 	}
 
 	const ships = createPlacementShips();
 
-	board.append(grid, ships);
+	board.append(boardSpacer, grid, ships);
 
 	const confirmButton = document.createElement("button");
 	confirmButton.textContent = "READY FOR GALACTIC BATTLE";
+	confirmButton.classList.add("confirm-button");
+
+	const randomizeButton = document.createElement("button");
+	randomizeButton.textContent = "RANDOMIZE FLEET";
+	randomizeButton.classList.add("randomize-fleet-button");
+
+	const buttonGroup = document.createElement("div");
+	buttonGroup.classList.add("button-group");
+	buttonGroup.append(confirmButton, randomizeButton);
 
 	const decoration = createShipPlacementDecoration();
 
-	container.append(header, board, confirmButton, decoration);
+	container.append(header, board, buttonGroup, decoration);
 
 	return container;
 }
