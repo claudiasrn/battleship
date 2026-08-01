@@ -1,4 +1,5 @@
 import { Player } from "../Player.js";
+import { Ship } from "../Ship.js";
 
 test("player is created with the given type", () => {
 	const player = new Player("human");
@@ -18,5 +19,5 @@ test("player's gameboard can have ships placed on it", () => {
 		[4, 5],
 	];
 
-	expect(player.gameboard.placeShip(coordinates)).toBe(true);
+	expect(player.gameboard.placeShip(coordinates)).toBeInstanceOf(Ship);
 });
