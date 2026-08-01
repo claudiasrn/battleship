@@ -273,9 +273,6 @@ h1 {
 	font-family: "Space Mono";
 	font-size: 1rem;
 	text-align: center;
-	cursor:
-		url("../assets/images/markers/cursor.png") 0 0,
-		auto;
 }
 
 .ship-placement-mode > .button-group > button:focus-visible {
@@ -283,11 +280,16 @@ h1 {
 	outline-offset: 2px;
 }
 
-/* Primary action */
 .ship-placement-mode > .button-group > .confirm-button {
 	background-color: #0b1220;
 	border: solid 1px #d85a30;
 	color: #e8eef7;
+}
+
+.ship-placement-mode > .button-group > .confirm-button:disabled {
+	opacity: 0.4;
+	cursor: not-allowed;
+	border-color: #223047;
 }
 
 .ship-placement-mode > .button-group > .confirm-button:hover {
@@ -295,7 +297,6 @@ h1 {
 	border-color: #e8543e;
 }
 
-/* Secondary action */
 .ship-placement-mode > .button-group > .randomize-fleet-button {
 	background-color: transparent;
 	border: dashed 1px #223047;
