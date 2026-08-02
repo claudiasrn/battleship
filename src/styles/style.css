@@ -470,53 +470,53 @@ h1 {
 }
 
 .cell-ship-sprite.vertical.cell-ship-sprite--sputnik {
-	top: 10;
-	left: -3;
+	top: 10px;
+	left: -3px;
 }
 
 .cell-ship-sprite.horizontal.cell-ship-sprite--sputnik {
-	top: 10;
-	left: 10;
+	top: 10px;
+	left: 10px;
 }
 
 .cell-ship-sprite.vertical.cell-ship-sprite--saturn-v {
-	top: 25;
-	left: 4;
+	top: 25px;
+	left: 4px;
 }
 
 .cell-ship-sprite.horizontal.cell-ship-sprite--saturn-v {
-	top: 5;
-	left: 25;
+	top: 5px;
+	left: 25px;
 }
 
 .cell-ship-sprite.vertical.cell-ship-sprite--falcon-heavy {
-	top: 20;
-	left: 4;
+	top: 20px;
+	left: 4px;
 }
 
 .cell-ship-sprite.horizontal.cell-ship-sprite--falcon-heavy {
-	top: 4;
-	left: 20;
+	top: 4px;
+	left: 20px;
 }
 
 .cell-ship-sprite.vertical.cell-ship-sprite--falcon9 {
-	top: 13;
-	left: 4;
+	top: 13px;
+	left: 4px;
 }
 
 .cell-ship-sprite.horizontal.cell-ship-sprite--falcon9 {
-	top: 5;
-	left: 13;
+	top: 5px;
+	left: 13px;
 }
 
 .cell-ship-sprite.vertical.cell-ship-sprite--voyager {
-	top: 15;
-	left: 4;
+	top: 15px;
+	left: 4px;
 }
 
 .cell-ship-sprite.horizontal.cell-ship-sprite--voyager {
-	top: 4;
-	left: 15;
+	top: 4px;
+	left: 15px;
 }
 
 .cell-ship-sprite--saturn-v {
