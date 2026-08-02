@@ -215,7 +215,12 @@ function performBotTurn(gameMode) {
 	resolveAttack(gameMode, 2, coordinate, true);
 }
 
-function resolveAttack(gameMode, activePlayerNumber, coordinate, isBotAttack = false) {
+function resolveAttack(
+	gameMode,
+	activePlayerNumber,
+	coordinate,
+	isBotAttack = false,
+) {
 	const enemyBoard = activePlayerNumber === 1 ? playerTwoBoard : playerOneBoard;
 	const result = enemyBoard.receiveAttack(coordinate);
 	if (result === undefined) return;
@@ -235,32 +240,40 @@ function resolveAttack(gameMode, activePlayerNumber, coordinate, isBotAttack = f
 		true,
 	);
 
-	setTimeout(() => {
-		if (enemyBoard.isOver()) {
-			finishBattle(gameMode, activePlayerNumber);
-			return;
-		}
+	setTimeout(
+		() => {
+			if (enemyBoard.isOver()) {
+				finishBattle(gameMode, activePlayerNumber);
+				return;
+			}
 
-		if (hit) {
-			startBattle(gameMode, activePlayerNumber);
-			return;
-		}
+			if (hit) {
+				startBattle(gameMode, activePlayerNumber);
+				return;
+			}
 
-		const nextPlayerNumber = activePlayerNumber === 1 ? 2 : 1;
+			const nextPlayerNumber = activePlayerNumber === 1 ? 2 : 1;
 
-		if (gameMode === "bot") {
-			startBattle(gameMode, nextPlayerNumber);
-		} else {
-			startSwitchToNextTurn(gameMode, nextPlayerNumber);
-		}
-	}, getTurnTransitionDelay(gameMode, activePlayerNumber));
+			if (gameMode === "bot") {
+				startBattle(gameMode, nextPlayerNumber);
+			} else {
+				startSwitchToNextTurn(gameMode, nextPlayerNumber);
+			}
+		},
+		getTurnTransitionDelay(gameMode, activePlayerNumber),
+	);
 }
 
 function finishBattle(gameMode, winnerNumber) {
 	const winnerName = winnerNumber === 2 ? "PLAYER 2" : "PLAYER 1";
 	const didPlayerWin = winnerNumber === 1;
 
-	const container = renderResults(gameMode, didPlayerWin, winnerName, winnerNumber);
+	const container = renderResults(
+		gameMode,
+		didPlayerWin,
+		winnerName,
+		winnerNumber,
+	);
 	mount(container);
 
 	const playAgainButton = container.querySelector("button");

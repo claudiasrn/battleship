@@ -483,7 +483,12 @@ function placeShipRandomly(ship, grid, gameboard) {
 		const row = Math.floor(Math.random() * (maxRow + 1));
 		const col = Math.floor(Math.random() * (maxCol + 1));
 
-		const coordinates = getCoveredCoordinates(row, col, shipLength, isHorizontal);
+		const coordinates = getCoveredCoordinates(
+			row,
+			col,
+			shipLength,
+			isHorizontal,
+		);
 		const placedShip = gameboard.placeShip(coordinates, shipName);
 
 		if (placedShip) {

@@ -31,8 +31,8 @@ export function animateSprite(
 }
 export function initSpriteAnimations(root) {
 	const stopFns = [];
-	root.querySelectorAll('[data-sprite-frames]').forEach(img => {
-		const shouldLoop = img.dataset.loop !== 'false';
+	root.querySelectorAll("[data-sprite-frames]").forEach((img) => {
+		const shouldLoop = img.dataset.loop !== "false";
 		const stop = animateSprite(
 			img,
 			Number(img.dataset.spriteFrames),
@@ -44,7 +44,7 @@ export function initSpriteAnimations(root) {
 		stopFns.push(stop);
 	});
 	return function stopAll() {
-		stopFns.forEach(stop => stop());
+		stopFns.forEach((stop) => stop());
 	};
 }
 
