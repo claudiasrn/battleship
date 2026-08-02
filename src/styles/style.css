@@ -176,9 +176,6 @@ h1 {
 	align-items: flex-start;
 	background-color: #0b1220;
 	border: solid 1px #223047;
-	cursor:
-		url("../assets/images/markers/cursor.png") 0 0,
-		pointer;
 }
 
 .mode-buttons > button:hover {
@@ -378,7 +375,6 @@ h1 {
 	max-height: 50px;
 }
 
-
 .floating-ship.vertical {
 	transform-origin: center center;
 	transform: rotate(90deg);
@@ -389,7 +385,6 @@ h1 {
 	opacity: 0.85;
 	pointer-events: none;
 }
-
 
 /* ============================
    Battle screen
@@ -449,6 +444,16 @@ h1 {
 
 .grid-element {
 	position: relative;
+}
+
+.grid--enemy .grid-element:not(.hit):not(.miss) {
+	cursor:
+		url("../assets/images/markers/cursor.png") 30 31,
+		pointer;
+}
+
+.grid--enemy .grid-element:not(.hit):not(.miss):hover {
+	background-color: rgba(216, 90, 48, 0.15);
 }
 
 .cell-ship-sprite {
@@ -610,9 +615,6 @@ h1 {
 	color: #7c93b3;
 	font-size: 1rem;
 	text-align: start;
-	cursor:
-		url("../assets/images/markers/cursor.png") 0 0,
-		auto;
 }
 
 .switch-mode > button:hover {
@@ -674,9 +676,6 @@ h1 {
 	color: #7c93b3;
 	font-size: 1rem;
 	text-align: start;
-	cursor:
-		url("../assets/images/markers/cursor.png") 0 0,
-		auto;
 }
 
 .results-mode > button:hover {
