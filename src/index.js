@@ -15,13 +15,13 @@ import {
 	isFleetPlaced,
 	placeFleetRandomly,
 } from "./placement.js";
-import { Gameboard } from "./Gameboard.js";
+import { Player } from "./Player.js";
 import { BotAI } from "./Bot.js";
 
 let stopCurrentAnimations = null;
 let stopCurrentInteractions = null;
-let playerOneBoard = new Gameboard();
-let playerTwoBoard = new Gameboard();
+let playerOne = new Player("human");
+let playerTwo = new Player("human");
 let botAI = null;
 
 function mount(container) {
@@ -38,8 +38,8 @@ function mount(container) {
 }
 
 function startApp() {
-	playerOneBoard = new Gameboard();
-	playerTwoBoard = new Gameboard();
+	playerOne = new Player("human");
+	playerTwo = new Player("human");
 
 	const container = renderModeSelect();
 	mount(container);
@@ -58,13 +58,17 @@ function startApp() {
 }
 
 function startShipPlacement(gameMode) {
-	renderPlayerShipPlacement(1, "PLAYER 1", playerOneBoard, () => {
+	if (gameMode === "bot") {
+		playerTwo.type = "bot";
+	}
+
+	renderPlayerShipPlacement(1, "PLAYER 1", playerOne.gameboard, () => {
 		if (gameMode === "bot") {
-			placeFleetRandomly(playerTwoBoard);
+			placeFleetRandomly(playerTwo.gameboard);
 			botAI = new BotAI();
 			startBattle(gameMode, 1);
 		} else {
-			renderPlayerShipPlacement(2, "PLAYER 2", playerTwoBoard, () => {
+			renderPlayerShipPlacement(2, "PLAYER 2", playerTwo.gameboard, () => {
 				startSwitchScreen(gameMode);
 			});
 		}
@@ -166,16 +170,16 @@ function startBattle(
 ) {
 	const ownBoard =
 		gameMode === "bot"
-			? playerOneBoard
+			? playerOne.gameboard
 			: activePlayerNumber === 1
-				? playerOneBoard
-				: playerTwoBoard;
+				? playerOne.gameboard
+				: playerTwo.gameboard;
 	const enemyBoard =
 		gameMode === "bot"
-			? playerTwoBoard
+			? playerTwo.gameboard
 			: activePlayerNumber === 1
-				? playerTwoBoard
-				: playerOneBoard;
+				? playerTwo.gameboard
+				: playerOne.gameboard;
 
 	const container = renderBattle(
 		activePlayerNumber,
@@ -221,7 +225,7 @@ function resolveAttack(
 	coordinate,
 	isBotAttack = false,
 ) {
-	const enemyBoard = activePlayerNumber === 1 ? playerTwoBoard : playerOneBoard;
+	const enemyBoard = activePlayerNumber === 1 ? playerTwo.gameboard : playerOne.gameboard;
 	const result = enemyBoard.receiveAttack(coordinate);
 	if (result === undefined) return;
 
