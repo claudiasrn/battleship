@@ -18,6 +18,10 @@ import starSparkleSrc from "./assets/images/decoration/star-sparkle.png";
 import attackPlayer1Src from "./assets/images/characters/player1/AttackPlayer1.png";
 import attackPlayer2Src from "./assets/images/characters/player2/AttackPlayer2.png";
 import deathPlayer1Src from "./assets/images/characters/player1/DeathPlayer1.png";
+import hurtPlayer1Src from "./assets/images/characters/player1/HurtPlayer1.png";
+import hurtPlayer2Src from "./assets/images/characters/player2/HurtPlayer2.png";
+import attackBotSrc from "./assets/images/characters/bot/AttackBot.png";
+import hurtBotSrc from "./assets/images/characters/bot/HurtBot.png";
 
 const shipSprites = {
 	"saturn-v": saturnVSrc,
@@ -26,6 +30,37 @@ const shipSprites = {
 	voyager: voyagerSrc,
 	sputnik: sputnikSrc,
 };
+
+// Sprite data per character "owner" and behavioral state. `hurt` currently
+// falls back to idle since no dedicated hurt sprite exists yet — swap in
+// real Hurt*.png imports here once available (same shape as attack/idle).
+const CHARACTER_SPRITES = {
+	player1: {
+		idle: { src: player1IdleSrc, frameCount: 4, loop: true },
+		attack: { src: attackPlayer1Src, frameCount: 9, loop: false },
+		hurt: { src: hurtPlayer1Src, frameCount: 2, loop: true },
+	},
+	player2: {
+		idle: { src: player2IdleSrc, frameCount: 4, loop: true },
+		attack: { src: attackPlayer2Src, frameCount: 6, loop: false },
+		hurt: { src: hurtPlayer2Src, frameCount: 2, loop: true },
+	},
+	bot: {
+		idle: { src: botIdleSrc, frameCount: 4, loop: true },
+		attack: { src: attackBotSrc, frameCount: 4, loop: false },
+		hurt: { src: hurtBotSrc, frameCount: 2, loop: true },
+	},
+};
+
+function getCharacterOwner(activePlayerNumber, gameMode, isEnemySlot) {
+	if (gameMode === "bot") {
+		return isEnemySlot ? "bot" : "player1";
+	}
+	if (!isEnemySlot) {
+		return activePlayerNumber === 2 ? "player2" : "player1";
+	}
+	return activePlayerNumber === 2 ? "player1" : "player2";
+}
 
 export function renderModeSelect() {
 	const container = document.createElement("div");
@@ -253,17 +288,10 @@ export function renderBattle(
 	ownAttackBoard,
 	enemyShipBoard,
 	enemyAttackBoard,
+	characterStates = { yours: "idle", enemy: "idle" },
 ) {
 	const container = document.createElement("div");
 	container.classList.add("battle-mode");
-
-	const yourSrc = activePlayerNumber === 2 ? player2IdleSrc : player1IdleSrc;
-	const enemySrc =
-		gameMode === "bot"
-			? botIdleSrc
-			: activePlayerNumber === 2
-				? player1IdleSrc
-				: player2IdleSrc;
 
 	const yourSide = createBoardSide(
 		"YOUR FLEET",
@@ -272,7 +300,11 @@ export function renderBattle(
 		ownAttackBoard,
 	);
 
-	const characters = createCharacters(yourSrc, enemySrc);
+	const characters = createCharacters(
+		activePlayerNumber,
+		gameMode,
+		characterStates,
+	);
 
 	const enemySide = createBoardSide(
 		"ENEMY FLEET",
@@ -366,30 +398,36 @@ function createShipSprite(ship) {
 	return img;
 }
 
-function createCharacters(yourSrc, enemySrc) {
+function createCharacters(activePlayerNumber, gameMode, characterStates) {
 	const characters = document.createElement("div");
 	characters.classList.add("characters");
 
-	const you = createCharacterSlot("YOU", yourSrc);
-	const enemy = createCharacterSlot("ENEMY", enemySrc);
+	const yourOwner = getCharacterOwner(activePlayerNumber, gameMode, false);
+	const enemyOwner = getCharacterOwner(activePlayerNumber, gameMode, true);
+
+	const you = createCharacterSlot("YOU", yourOwner, characterStates.yours);
+	const enemy = createCharacterSlot("ENEMY", enemyOwner, characterStates.enemy);
 
 	characters.append(you, enemy);
 
 	return characters;
 }
 
-function createCharacterSlot(label, src) {
+function createCharacterSlot(label, owner, state) {
 	const slot = document.createElement("div");
 	slot.classList.add("character-slot");
+
+	const { src, frameCount, loop } = CHARACTER_SPRITES[owner][state];
 
 	const img = document.createElement("img");
 	img.src = src;
 	img.alt = "";
 	img.classList.add("battle-character");
-	img.dataset.spriteFrames = 4;
+	img.dataset.spriteFrames = frameCount;
 	img.dataset.frameWidth = 48;
 	img.dataset.frameHeight = 48;
-	img.dataset.state = "idle";
+	img.dataset.state = state;
+	img.dataset.loop = loop ? "true" : "false";
 
 	slot.append(img);
 
