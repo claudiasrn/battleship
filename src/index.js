@@ -146,8 +146,8 @@ function startSwitchToNextTurn(gameMode, nextPlayerNumber) {
 }
 
 const ATTACK_FRAMES = {
-	player1: 9,
-	player2: 6,
+	player1: 3,
+	player2: 3,
 	bot: 4,
 };
 const FRAME_DELAY = 300;

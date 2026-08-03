@@ -37,12 +37,12 @@ const shipSprites = {
 const CHARACTER_SPRITES = {
 	player1: {
 		idle: { src: player1IdleSrc, frameCount: 4, loop: true },
-		attack: { src: attackPlayer1Src, frameCount: 9, loop: false },
+		attack: { src: attackPlayer1Src, frameCount: 3, loop: false },
 		hurt: { src: hurtPlayer1Src, frameCount: 2, loop: true },
 	},
 	player2: {
 		idle: { src: player2IdleSrc, frameCount: 4, loop: true },
-		attack: { src: attackPlayer2Src, frameCount: 6, loop: false },
+		attack: { src: attackPlayer2Src, frameCount: 3, loop: false },
 		hurt: { src: hurtPlayer2Src, frameCount: 2, loop: true },
 	},
 	bot: {
@@ -561,14 +561,14 @@ export function renderResults(
 function getResultCharacter(gameMode, didPlayerWin, winnerNumber) {
 	if (gameMode === "bot") {
 		if (didPlayerWin) {
-			return { src: attackPlayer1Src, frameCount: 9 };
+			return { src: attackPlayer1Src, frameCount: 3 };
 		}
 		return { src: deathPlayer1Src, frameCount: 6 };
 	}
 
 	return winnerNumber === 2
-		? { src: attackPlayer2Src, frameCount: 6 }
-		: { src: attackPlayer1Src, frameCount: 9 };
+		? { src: attackPlayer2Src, frameCount: 3 }
+		: { src: attackPlayer1Src, frameCount: 3 };
 }
 
 function createResultsDecoration() {
