@@ -561,13 +561,9 @@ export function renderResults(
 function getResultCharacter(gameMode, didPlayerWin, winnerNumber) {
 	if (gameMode === "bot") {
 		if (didPlayerWin) {
-			return winnerNumber === 2
-				? { src: attackPlayer2Src, frameCount: 6 }
-				: { src: attackPlayer1Src, frameCount: 9 };
+			return { src: attackPlayer1Src, frameCount: 9 };
 		}
-		return winnerNumber === 2
-			? { src: deathPlayer2Src, frameCount: 6 }
-			: { src: deathPlayer1Src, frameCount: 6 };
+		return { src: deathPlayer1Src, frameCount: 6 };
 	}
 
 	return winnerNumber === 2
