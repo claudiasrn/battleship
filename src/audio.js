@@ -43,7 +43,7 @@ export function initButtonClickSounds() {
 
 export function initButtonHoverSounds() {
 	document.addEventListener("mouseover", (event) => {
-		const target = event.target.closest("button, .floating-ship");
+		const target = event.target.closest("button");
 		if (!target || target.disabled) return;
 		if (target.contains(event.relatedTarget)) return;
 
