@@ -314,6 +314,46 @@ h1 {
 
 .board-spacer {
 	justify-self: stretch;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.placement-instructions {
+	width: 320px;
+	padding: 25px 30px;
+	background-color: #0b1220;
+	border: solid 1px #223047;
+}
+
+.placement-instructions > h3 {
+	font-family: "Press Start 2P";
+	color: #e8eef7;
+	font-size: 0.85rem;
+	letter-spacing: 1px;
+	margin-bottom: 20px;
+}
+
+.placement-instructions > ul {
+	list-style: none;
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+}
+
+.placement-instructions > ul > li {
+	font-family: "Space Mono";
+	color: #7c93b3;
+	font-size: 0.85rem;
+	line-height: 1.5;
+	padding-left: 22px;
+	position: relative;
+}
+
+.placement-instructions > ul > li::before {
+	content: "▸";
+	position: absolute;
+	left: 0;
+	color: #d85a30;
 }
 
 .ships {

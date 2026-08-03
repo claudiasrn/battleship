@@ -202,6 +202,7 @@ export function renderShipPlacement(playerName, playerNumber) {
 
 	const boardSpacer = document.createElement("div");
 	boardSpacer.classList.add("board-spacer");
+	boardSpacer.append(createPlacementInstructions());
 
 	const grid = document.createElement("div");
 	grid.classList.add("grid");
@@ -237,6 +238,33 @@ export function renderShipPlacement(playerName, playerNumber) {
 	container.append(header, board, buttonGroup, decoration);
 
 	return container;
+}
+
+function createPlacementInstructions() {
+	const instructions = document.createElement("div");
+	instructions.classList.add("placement-instructions");
+
+	const heading = document.createElement("h3");
+	heading.textContent = "HOW TO DEPLOY";
+
+	const list = document.createElement("ul");
+
+	const steps = [
+		"Drag a ship onto the grid",
+		"Click a ship to rotate it",
+		"Click a placed ship to pick it back up",
+		"Use randomize fleet for instant placement",
+	];
+
+	steps.forEach((step) => {
+		const item = document.createElement("li");
+		item.textContent = step;
+		list.append(item);
+	});
+
+	instructions.append(heading, list);
+
+	return instructions;
 }
 
 function createPlacementShips() {
