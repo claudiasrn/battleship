@@ -28,14 +28,8 @@ export function initBackgroundMusic() {
 }
 
 export function initButtonClickSounds() {
-	document.addEventListener("click", (event) => {
-		if (event.target.closest("button")) {
-			new Audio(clickSrc).play().catch(() => {});
-		}
-	});
-
 	document.addEventListener("pointerdown", (event) => {
-		if (event.target.closest(".floating-ship, .ship-placement-mode .cell-ship-sprite")) {
+		if (event.target.closest("button, .floating-ship, .ship-placement-mode .cell-ship-sprite")) {
 			new Audio(clickSrc).play().catch(() => {});
 		}
 	});
