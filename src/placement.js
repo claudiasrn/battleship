@@ -1,3 +1,5 @@
+import { playShipSnap, playShipRejected } from "./audio.js";
+
 const CELL_SIZE = 50;
 
 const SHIP_LENGTHS = {
@@ -190,10 +192,13 @@ function attemptSnap(ship, grid, gameboard) {
 	const placedShip = gameboard.placeShip(coordinates, shipName);
 
 	if (placedShip) {
+		playShipSnap();
 		positionShipOnGrid(ship, grid, row, col, shipLength, isHorizontal);
 		shipPlacements.set(ship, { placedShip, row, col, isHorizontal });
 		return;
 	}
+
+	playShipRejected();
 
 	if (previousPlacement) {
 		const restoredShip = gameboard.placeShip(

@@ -8,6 +8,15 @@ import {
 } from "./DOM.js";
 import { initSpriteAnimations, blinkElement } from "./animation.js";
 import {
+	initBackgroundMusic,
+	initButtonClickSounds,
+	initButtonHoverSounds,
+	playGameStart,
+	playAttackResult,
+	playShipDestroyed,
+	playResultMusic,
+} from "./audio.js";
+import {
 	initShipRotation,
 	initShipTrayLayout,
 	initShipDragging,
@@ -66,6 +75,7 @@ function startShipPlacement(gameMode) {
 		if (gameMode === "bot") {
 			placeFleetRandomly(playerTwo.gameboard);
 			botAI = new BotAI();
+			playGameStart();
 			startBattle(gameMode, 1);
 		} else {
 			renderPlayerShipPlacement(2, "PLAYER 2", playerTwo.gameboard, () => {
@@ -119,6 +129,7 @@ function startSwitchScreen(gameMode) {
 
 	const confirmButton = container.querySelector("button");
 	confirmButton.addEventListener("click", () => {
+		playGameStart();
 		startBattle(gameMode, 1);
 	});
 }
@@ -225,15 +236,22 @@ function resolveAttack(
 	coordinate,
 	isBotAttack = false,
 ) {
-	const enemyBoard = activePlayerNumber === 1 ? playerTwo.gameboard : playerOne.gameboard;
+	const enemyBoard =
+		activePlayerNumber === 1 ? playerTwo.gameboard : playerOne.gameboard;
 	const result = enemyBoard.receiveAttack(coordinate);
 	if (result === undefined) return;
 
 	const hit = result === "x";
+	playAttackResult(hit);
+
+	const [row, col] = coordinate;
+	const shipCell = hit ? enemyBoard.getShipBoard()[row][col] : null;
+
+	if (shipCell && shipCell.isSunk()) {
+		playShipDestroyed();
+	}
 
 	if (isBotAttack) {
-		const [row, col] = coordinate;
-		const shipCell = hit ? enemyBoard.getShipBoard()[row][col] : null;
 		botAI.registerResult(coordinate, hit, shipCell);
 	}
 
@@ -272,6 +290,8 @@ function finishBattle(gameMode, winnerNumber) {
 	const winnerName = winnerNumber === 2 ? "PLAYER 2" : "PLAYER 1";
 	const didPlayerWin = winnerNumber === 1;
 
+	playResultMusic(gameMode, didPlayerWin);
+
 	const container = renderResults(
 		gameMode,
 		didPlayerWin,
@@ -286,4 +306,7 @@ function finishBattle(gameMode, winnerNumber) {
 	});
 }
 
+initBackgroundMusic();
+initButtonClickSounds();
+initButtonHoverSounds();
 startApp();
